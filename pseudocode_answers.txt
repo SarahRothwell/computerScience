@@ -1,0 +1,58 @@
+
+INTRODUCTION TO PSEUDOCODE
+
+Short Answers
+
+Q1. Why do programmers use pseudocode?
+
+Pseudocode is an easy way to work through problems and communicate ideas with other people without the use of complex syntax of a programming language.
+
+Q2. If you run pseudocode on our computer what would happen?
+
+No it will not run because pseudocode does not use a programming language.
+
+Programming Assignment
+
+Q1. Create a function that takes two numbers and prints out the greater number.
+
+FUNCTION greaterNumber (firstNumber, secondNumber)
+	IF the firstNumber is greater than the secondNumber THEN
+		PRINT firstNumber
+	ELSE
+		PRINT secondNumber
+	END IF;
+ENDFUNCTION
+
+Q2. Create a function that prints out the numbers from 1 to 100
+
+FUNCTION countingNumbers
+	FOR counter in 1 to 100
+		PRINT counter
+	ENDFOR;
+ENDFUNCTION
+
+Q3. Create a function that searches for a specific entry in a phonebook.
+
+FUNCTION search(firstName)
+	FOR each element in the phoneBook array
+		IF firstName equals array[i].name THEN
+			RETURN array[i]; 
+		ENDIF
+	ENDFOR
+ENDFUNCTION
+
+Q4. Using the pseudocode you wrote in the previous question, implement it in any computer language of your choice.
+
+var phoneBook = [
+  {name:"Sarah", phoneNum: "760-475-3958"},
+  {name:"Adam", phoneNum: "760-458-3958"}];
+
+function search(firstName){
+  for (let i=0; i < phoneBook.length; i++){
+    if (phoneBook[i].name == firstName){
+      return phoneBook[i];
+    }
+  }
+}
+
+search("Adam");
