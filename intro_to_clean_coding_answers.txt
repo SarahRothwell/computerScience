@@ -13,19 +13,29 @@ Q3. Would you consider the following to be clean code? Explain why or why not. I
 
 A. The code could be cleaner if you created two functions: (1) to change Fahrenheit to Celsius and (2) to change Celsius to Fahrenheit, and improved the meaningfulness of the naming
 
+FUNCTION temperatureUnitChange(temp, unit){
+	IF unit = "F" THEN
+		CALL fahrenheitCelsius(temp)
+	ELSE IF unit = "C" THEN
+		CALL celsiusFahrenheit(temp)
+	END IF
+}
+
 FUNCTION fahrenheitCelsius(temp)
 	SET tempCelsius to (temp−32) * (5/9)
 	PRINT tempCelsius
 END FUNCTION
 
 FUNCTION celsiusFahrenheit(temp)
-	SET tempFahrenheit to (temp−32) * (5/9)
+	SET tempFahrenheit to temp * 1.8000 + 32.00
 	PRINT tempFahrenheit
 END FUNCTION
 
 Q4. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
 
 A. Yes, it is clean code because function has one purpose and the variables and function name have meaningful names that allow the reader quickly understand what the function is used for. The only small issue is the name of the function because it doesn't use the whole word calculate. In self-documenting code it should be calculatePercent.
+
+
 
 
 Q5. Refactor the code
@@ -39,19 +49,40 @@ ENDFUNCTION
 
 FUNCTION checkOutCustomer(paymentType)
    IF paymentType = 'CASH' THEN
-       CALL getPayment RETURNING total
-       PRINT "Change due: " + amount - subTotal * discountRate + (subTotal * tax)
+       PRINT "Change due: " + amount - CALL getPayment(subtotal, discountRate)
    ELSE IF paymentType = 'CREDIT CARD' THEN
        CALL getPayment RETURNING total
-       PRINT "Your credit card has been charged: " + subTotal * discountRate + (subTotal * tax)
+       PRINT "Your credit card has been charged: " + CALL getPayment(subtotal, discountRate)
    END IF
 END FUNCTION
 
 
-Question 5B
 
 
-Question 5C
+Question 5B: Refactor the code
+
+
+FUNCTION userAccountCheck(guest)
+	IF guest.accountActive AND NOT (guest.hasOverdueBooks) AND guest.outstandingFees = 0
+		RETURN TRUE
+	ELSE 
+		RETURN FALSE
+	END IF
+END FUNCTION
+
+FUNCTION checkoutBook(book, guest)
+	IF CALL userAccountCheck(guest) is TRUE 
+		APPEND book to guest.books
+           SET book.status to "Checked Out"
+           PRINT "Your books have been issued."
+	ELSE 
+		PRINT "Unable to check out book."
+	END IF
+END FUNCTION
+
+
+
+Question 5C: Refactor the code
 
 CLASS BankAccount
 
@@ -68,26 +99,30 @@ CLASS BankAccount
        SET balance to balance - amount
      END
  END FUNCTION
-
- FUNCTION checkStatus
-     IF NOT(customer.hasCheckingAccount) THEN
-         CALL offerCheckingAccount
-     END
- END FUNCTION
-
  ....
  ....
  ....
 
 END
 
-CLASS CreditCard
+CLASS CreditCardStatus
 
-FUNCTION creditCardOffer
+ FUNCTION creditCardOffer
      IF NOT(customer.hasCreditCard) THEN
          CALL offerCreditCard
      END
  END FUNCTION
+
+END
+
+CLASS CheckingAccountStatus
+ 
+ FUNCTION checkStatus
+     IF NOT(customer.hasCheckingAccount) THEN
+         CALL offerCheckingAccount
+     END
+ END FUNCTION 
+
 END
 
 
