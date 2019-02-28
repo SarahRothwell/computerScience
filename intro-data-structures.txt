@@ -1,0 +1,49 @@
+Question 1
+a) Use an array input: ["Vivian", "Ava", "Josh", "Patrick", "Mike"]
+
+let array = ["Vivian", "Ava", "Josh", "Patrick", "Mike"];
+
+
+b) Insert a new person, "Mary" at the end of the line. In other words, you should insert Mary after Mike.
+
+array.push("Mary");
+
+c) Find a person in line named "Josh." This function should return the position of 2 in the array, (recall that arrays are 0-based).
+
+var findJosh = array.indexOf("Josh")
+
+d) Find a person in line named "Emily." What should your function return if it does not find the item in the array?
+
+var findEmily = array.indexOf("Emily")
+
+If the item is not in the array the return should be -1
+
+e) What if Ava wants to allow a friend, "Melissa", to cut in line in front of her? How would you code this so Melissa appears before Ava?
+
+
+array.splice(1, 0, "Melissa")
+
+
+f) If Patrick wants to leave the line, how would you delete him from the array?
+
+Option 1:
+
+for (let i=0; i<array.length-1; i++){
+  if(array[i] == "Patrick"){
+    array.splice(i,1);
+  }
+}
+
+Option 2:
+
+array.splice(4, 1)
+
+
+Q2. Provide another real-world example that you can model using a data structure.
+
+A. Create a shopping list using a stack.
+
+Q3. How would your data structure allow developers to access and manipulate the data?
+
+A. push() to add an element to the top of an array or pop() to remove element from end of array.
+

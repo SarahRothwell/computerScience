@@ -1,0 +1,130 @@
+
+INTRO TO CLEAN CODING
+
+Q1. In your own words, explain what clean code is and why it is important.
+
+A. Clean code is a term used to describe purposeful programming whereby a programmer creates code that is easy to understand and read using a series of principles & processes such as Don't Repeat Yourself, meaningful naming, self-documenting code, method extraction, etc.
+
+Q2. Toyota article
+
+A. In healthcare, there is always problems with security of electronic medical records and mobile applications that contain patient data. If there is a security breach due to bad code and other vulnerabilities, private patient data will be accessible to the wrong people.
+
+Q3. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+A. The code could be cleaner if you created two functions: (1) to change Fahrenheit to Celsius and (2) to change Celsius to Fahrenheit, and improved the meaningfulness of the naming
+
+FUNCTION fahrenheitCelsius(temp)
+	SET tempCelsius to (temp−32) * (5/9)
+	PRINT tempCelsius
+END FUNCTION
+
+FUNCTION celsiusFahrenheit(temp)
+	SET tempFahrenheit to (temp−32) * (5/9)
+	PRINT tempFahrenheit
+END FUNCTION
+
+Q4. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+A. Yes, it is clean code because function has one purpose and the variables and function name have meaningful names that allow the reader quickly understand what the function is used for. The only small issue is the name of the function because it doesn't use the whole word calculate. In self-documenting code it should be calculatePercent.
+
+
+Q5. Refactor the code
+
+A.
+
+FUNCTION getPayment(subTotal, discountRate)
+	RETURN total to subTotal * discountRate + (subTotal * tax)
+ENDFUNCTION
+
+
+FUNCTION checkOutCustomer(paymentType)
+   IF paymentType = 'CASH' THEN
+       CALL getPayment RETURNING total
+       PRINT "Change due: " + amount - subTotal * discountRate + (subTotal * tax)
+   ELSE IF paymentType = 'CREDIT CARD' THEN
+       CALL getPayment RETURNING total
+       PRINT "Your credit card has been charged: " + subTotal * discountRate + (subTotal * tax)
+   END IF
+END FUNCTION
+
+
+Question 5B
+
+
+Question 5C
+
+CLASS BankAccount
+
+ FUNCTION displayBalance
+    PRINT balance
+ END FUNCTION
+
+ FUNCTION deposit(amount)
+    SET balance to balance + amount
+ END FUNCTION
+
+ FUNCTION withdraw(amount)
+     IF balance > amount THEN
+       SET balance to balance - amount
+     END
+ END FUNCTION
+
+ FUNCTION checkStatus
+     IF NOT(customer.hasCheckingAccount) THEN
+         CALL offerCheckingAccount
+     END
+ END FUNCTION
+
+ ....
+ ....
+ ....
+
+END
+
+CLASS CreditCard
+
+FUNCTION creditCardOffer
+     IF NOT(customer.hasCreditCard) THEN
+         CALL offerCreditCard
+     END
+ END FUNCTION
+END
+
+
+PROGRAMMING QUESTIONS
+
+Q6. Square Given an array of integers, find out whether the sum of the integers is a perfect square. If it is a perfect square, return the square root, otherwise return the sum.
+
+Answer:
+
+function squareCheck(array){
+  let sumArray = array.reduce((total, amount) => total + amount);
+  if (Math.sqrt(sumArray) % 1 === 0){
+    return Math.sqrt(sumArray));
+  } else {
+    return sumArray;
+  }
+};
+
+squareCheck([4,4,4,4]);
+
+Q7. Duplicate Given an array of integers, find out whether the array contains any duplicate elements. The function should return true if any value appears at least twice in the array, and false if every element is distinct.
+
+Answer:
+
+function duplicateCheck(array){
+ for (let i=0; i<array.length; i++){
+   for (let j= i+1; j<array.length; j++){
+     if (array[i] === array[j]){
+       console.log('duplicate');
+       return true;
+      } else {
+       console.log('no duplicates');
+       return false;
+     }
+   }
+ }
+}
+
+duplicateCheck([1,2,2,3,4,4,4])
+
