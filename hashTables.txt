@@ -1,0 +1,235 @@
+
+HASH TABLES
+
+
+WRITTEN QUESTIONS
+
+Q1. What is a hash table?
+
+A. A hash table is a data structure (associative array) that allows programmers to keep a list of key-value pairs and easily look up values based on the key. The key and value can be any type of data structure. However, a string is often used for the key.
+
+Q2. What is hashing
+
+Hashing refers to the use of a hash function that takes in a key (string), converts it into a fixed length integer (referred to as a hash code) and then remaps that integer into an index into the array (key maps to hash code maps to index). The hash code is independent of the array size (for example, there could be a billion potential hash codes, but the array length is 10). By mapping the hash codes to the indexes in the array, we make sure that the number of hash codes is equal to the array size. The key is used in the code to access the value associated with the key.
+
+Q3. How does a hash table store data?
+
+See Q2 answer
+
+Q4. How are hash tables and objects different?
+
+In general, and depending on the programming language used, there are not a lot of differences between hash tables and objects. It is better to use Hash Tables if you have a collection of similar data within each bucket each with an identifier. Objects can hold different types of data and should be used if you have a static number of distinct values of different types.
+
+Q5. Determine whether you would use a hash table or an object to store each of the following pieces of data:
+a. A list of pets and their unique names. HASH TABLE
+b. The name, age, and the birthday of your best friend. OBJECT
+c. The name and location of every company in a given city. HASH TABLE
+d. All of the books checked out from a library by a particular individual. HASH TABLE
+e. The primary and secondary phone numbers for a contact. OBJECT
+
+
+PROGRAMMING QUESTIONS
+
+Q1. Create a hash table that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers.
+
+//hashing function for string
+var hash = (string, max) => {
+  var hash = 0;
+  for (let i =0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  //hash code for string
+  return hash % max;
+}
+
+let HashTable = function(){
+  let storage = [];
+  //# of buckets in storage array
+  const storageLimit = 100;
+  
+  this.print = function(){
+    console.log(storage);
+  };
+  
+  //add information to the hash table
+  this.add = function(key, value){
+    //set index 
+    let index = hash(key, storageLimit);
+    //check whether the index is pointing to a bucket that already has data in it.
+    if (storage[index] === undefined){
+      storage[index] = [
+        [key, value]
+      ];
+    } else {
+      let inserted = false;
+      for (let i = 0; i < storage[index].length; i++){
+        if(storage[index][i][0] === key){
+          storage[index][i][0] = value;
+          inserted = true;
+        }
+      }
+      if(inserted === false){
+        storage[index].push([key, value]);
+      }
+    }
+  };
+  
+  this.lookup = function(key){
+    var index = hash(key, storageLimit);
+    if (storage[index] === undefined){
+      return undefined;
+    } else {
+      for (let i=0; i< storage[index].length; i++){
+        //go through each element in the bucket and return the one that equals the key
+        if (storage[index][i][0] === key){
+          return storage[index][i][1];
+        }
+      }
+    }
+  };
+  
+}
+
+let newHashTable = new HashTable();
+newHashTable.add(111, {name: 'Sarah', address: 'New York USA'});
+newHashTable.add(112, {name: 'Markus', address: 'Boston USA'});
+newHashTable.print()
+console.log(newHashTable.lookup(111));
+
+Q2. Create a hash table that allows a store owner to track their store's inventory and quantity.
+
+//hashing function for string
+var hash = (string, max) => {
+  var hash = 0;
+  for (let i =0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  //hash code for string
+  return hash % max;
+}
+
+let HashTable = function(){
+  let storage = [];
+  //# of buckets in storage array
+  const storageLimit = 4;
+  
+  this.print = function(){
+    console.log(storage);
+  };
+  
+  //add information to the hash table
+  this.add = function(key, value){
+    //set index 
+    let index = hash(key, storageLimit);
+    //check whether the index is pointing to a bucket that already has data in it.
+    if (storage[index] === undefined){
+      storage[index] = [
+        [key, value]
+      ];
+    } else {
+      // update value if key already exists
+      let inserted = false;
+      for (let i = 0; i < storage[index].length; i++){
+        if(storage[index][i][0] === key){
+          storage[index][i][0] = value;
+          inserted = true;
+        }
+      }
+      // add new value if key doesn't exist
+      if(inserted === false){
+        storage[index].push([key, value]);
+      }
+    }
+  };
+  
+  this.lookup = function(key){
+    var index = hash(key, storageLimit);
+    if (storage[index] === undefined){
+      return undefined;
+    } else {
+      for (let i=0; i< storage[index].length; i++){
+        //go through each element in the bucket and return the one that equals the key
+        if (storage[index][i][0] === key){
+          return storage[index][i][1];
+        }
+      }
+    }
+  };
+  
+}
+
+let newHashTable = new HashTable();
+newHashTable.add('shoe', 25);
+newHashTable.add('toothpaste', 40);
+newHashTable.print()
+console.log(newHashTable.lookup('shoe'));
+
+Q3. Create a hash table that allows digital copies of newspapers to be entered and searched by publisher and publication date.
+
+//hashing function for string
+var hash = (string, max) => {
+  var hash = 0;
+  for (let i =0; i < string.length; i++){
+    hash += string.charCodeAt(i);
+  }
+  //hash code for string
+  return hash % max;
+}
+
+let HashTable = function(){
+  let storage = [];
+  //# of buckets in storage array
+  const storageLimit = 10;
+  
+  this.print = function(){
+    console.log(storage);
+  };
+  
+  //add information to the hash table
+  this.add = function({publisher, date}, value){
+    let key = publisher + date;
+    //set index 
+    let index = hash(key, storageLimit);
+    //check whether the index is pointing to a bucket that already has data in it.
+    if (storage[index] === undefined){
+      storage[index] = [
+        [key, value]
+      ];
+    } else {
+      // update value if key already exists
+      let inserted = false;
+      for (let i = 0; i < storage[index].length; i++){
+        if(storage[index][i][0] === key){
+          storage[index][i][0] = value;
+          inserted = true;
+        }
+      }
+      // add new value if key doesn't exist
+      if(inserted === false){
+        storage[index].push([key, value]);
+      }
+    }
+  };
+  
+  this.lookup = function({publisher, date}){
+    let key = publisher + date;
+    var index = hash(key, storageLimit);
+    if (storage[index] === undefined){
+      return undefined;
+    } else {
+      for (let i=0; i< storage[index].length; i++){
+        //go through each element in the bucket and return the one that equals the key
+        if (storage[index][i][0] === key){
+          return storage[index][i][1];
+        }
+      }
+    }
+  };
+  
+}
+
+let newHashTable = new HashTable();
+newHashTable.add({publisher: "Adam", date: "Jan1"}, "NewsArticle1");
+newHashTable.add({publisher: "Sarah", date: "Feb1"}, "NewsArticle2");
+newHashTable.print()
+console.log(newHashTable.lookup({publisher: "Sarah", date: "Feb1"}));

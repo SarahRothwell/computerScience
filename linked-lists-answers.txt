@@ -1,0 +1,237 @@
+
+LINKED LISTS
+
+Q1. What are some pros and cons of using linked lists instead of arrays?
+
+Pros
+- Dynamic data structure: can expand and shrink in size (arrays are fixed size)
+- No memory wastage because of the dynamic data structure
+- Inserting and deleting data does not require us to move/shift subsequent data elements
+
+
+Cons
+- No direct access to elements, only sequential access (does not use indexes like arrays). 
+- Require more memory is required for linked list compared to array because each node contains a pointer and requires extra memory for itself.
+
+
+Q2. Come up with a real world example of a linked list.
+
+Using an elevator to reach a floor in an apartment building. If you want to go to the 10th floor, you must pass floors 1 to 9 before reaching it.
+
+PROGRAMMING EXERCISES
+
+Before beginning to code, write out a plan explaining how to solve the question.
+
+Q1. The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
+
+
+FUNCTION push(element)
+CREATE node
+SET node.value TO element
+SET node.next TO null
+
+IF the head node does not exist
+ THEN SET head to node
+ELSE
+ SET current to head
+ SET current.next to node
+END IF
+END FUNCTION
+
+The pseudocode above doesn't traverse from the head node through the linked list. It needs a while loop.
+
+CODE - See below
+
+
+Q2.Given an unsorted singly linked list, remove all duplicates from the linked list.
+Example
+Input: a -> c -> d -> d -> a
+Output: a -> c -> d
+
+FUNCTION removeDuplicates(){
+
+IF the head node OR head.next does not exist
+	THEN RETURN
+
+SET currentNode to head
+
+For each node in the list
+	Transverse the list
+		If any node has the same value as the Node in the outer loop
+			remove Node
+END FUNCTION
+
+
+Q3. Given an unsorted singly linked list, reverse it.
+Example
+Input: a -> b -> c -> d
+Output: d -> c -> b -> a
+
+
+PSEUDOCODE
+
+FUNCTION reverseList()
+	IF head node OR current.next does not exist
+		RETURN
+
+INT previousNode, nextNode
+SET currentNode to head
+
+WHILE currentNode
+	SET nextNode to currentNode.next;
+    	SET currentNode.next to previousNode;
+    	SET previousNode to currentNode;
+    	SET currentNode to nextNode; 
+END WHILE 
+SET head to previousNode
+END FUNCTION
+
+
+
+***CODING FOR THIS ASSIGNMENT***
+
+class LinkedList {
+  constructor(head, length){
+    this.head = null;
+    this.length = 0;
+  }
+}
+
+//check if linked list is empty
+LinkedList.prototype.isEmpty = function(){
+  if (this.head ===null){
+    return true;
+  } else {
+    return false;
+  }
+};
+
+//print linked list
+
+LinkedList.prototype.print = function(){
+  if(!this.head){
+    console.log("No elements in list");
+    return;
+  }
+  
+  var currentNode = this.head;
+  
+  while (currentNode){
+    console.log(currentNode.value);
+    currentNode = currentNode.next;
+  };
+}
+
+
+//add new value to end of list
+//1.Create new node 2. traverse list until last node
+//3. Make last node next value pt to new node
+
+LinkedList.prototype.push = function(val){
+   let newNode = {
+    value: val,
+    next: null
+  };
+
+  if (this.isEmpty()){
+    this.head = newNode;
+    return;
+  }
+
+  let currentNode = this.head;
+
+  while (currentNode.next !== null){
+    currentNode = currentNode.next;
+  }
+  currentNode.next = newNode;
+};
+
+
+// reverse elements in list
+
+LinkedList.prototype.reverseList = function(){
+  if(!this.head || !this.head.next){
+    console.log("Cannot be revered because there is either 1 or 0 elements in the list")
+    return;
+  }
+  
+  let previousNode, nextNode;
+  let currentNode = this.head;
+
+  while (currentNode){
+    nextNode = currentNode.next;
+    currentNode.next = previousNode;
+    previousNode = currentNode;
+    currentNode = nextNode;
+  }
+  this.head = previousNode;
+};
+
+
+LinkedList.prototype.removeDuplicate = function(){
+  
+  //Checks for empty or single element LinkedList
+    if (!this.head || !this.head.next) {
+    console.log('No duplicates were found. Empty or a single element Linked List.');
+    return;
+  };
+  
+  let currentNode = this.head;
+  
+  while (currentNode.next !== null){
+    let currentNodeL1 = currentNode;
+    let currentNodeL2 = currentNode.next;
+    let previousNode = currentNodeL1;
+      
+    while (currentNodeL2 != null){
+      
+      if (currentNodeL1.value == currentNodeL2.value){
+        // previousNode.next used to point to currentNodeL2; now
+      // we want to "skip" currentNodeL2
+         previousNode.next = currentNodeL2.next;
+          this.length --;
+      } 
+      previousNode = currentNodeL2;
+      currentNodeL2 = currentNodeL2.next;
+      
+    }
+    currentNodeL1 = currentNodeL1.next; 
+  }
+  
+};
+  
+
+let list = new LinkedList;
+list.push('a');
+list.push('b');
+list.push('c');
+list.push('c');
+list.reverseList();
+list.print();
+list.removeDuplicate();
+list.print();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
